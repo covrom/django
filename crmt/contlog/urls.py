@@ -8,6 +8,8 @@ Class-based views
     2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
 """
     
+from .views import HomePageView
+
 urlpatterns = [
-    #url(r'^$', ),
+    url(r'^$', HomePageView.as_view(), name='home'),
 ]

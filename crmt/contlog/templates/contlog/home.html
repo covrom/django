@@ -1,0 +1,10 @@
+{% extends 'contlog/base.html' %}
+{% load bootstrap3 %}
+
+{% block title %}Прокатчики{% endblock %}
+
+{% block content %}
+    {% for contact in allcontacts %}
+        <p>{{ contact.name }}</p>
+    {% endfor %}
+{% endblock %}
