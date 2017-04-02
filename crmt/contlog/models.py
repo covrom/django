@@ -31,20 +31,26 @@ class Contact(models.Model):
         ordering = ["name"]
         verbose_name = "Прокатчик"
         verbose_name_plural = "Прокатчики"
+    
+    def get_lastevent(self):
+        evset = '\n'.join([str(i) for i in self.events_set.order_by('-id')[:1]])
+        return evset
+
 
 class Events(models.Model):
     """События"""
-    added = models.DateTimeField(db_index=True, auto_now_add=True)
-    todate = models.DateField(db_index=True, blank=True)
+    added = models.DateTimeField("добавлено", db_index=True, auto_now_add=True)
+    reminder_date = models.DateField("дата напоминания", db_index=True, blank=True, null=True)
     contact = models.ForeignKey(Contact, on_delete=models.CASCADE, verbose_name="Прокатчик")
     spectacle = models.ForeignKey(Spectacle, on_delete=models.CASCADE, verbose_name="Спектакль")
+    spectacle_date = models.DateField("дата спектакля", db_index=True, blank=True, null=True)
     comments = models.TextField("комментарии", blank=True)
 
     def __str__(self):
-        return '{0} '.format(self.added)+' '.join([self.contact.name, self.spectacle.name, self.comments.to_python().split('\n', 1)[0]])
+        return '{0:%d.%m.%Y %H:%M} {1}'.format(self.added,self.comments.split('\n', 1)[0])
 
     class Meta:
-        ordering = ["-added"]
+        ordering = ["-id"]
         verbose_name = "Событие"
         verbose_name_plural = "События"
         

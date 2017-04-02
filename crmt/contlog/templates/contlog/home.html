@@ -5,6 +5,13 @@
 
 {% block content %}
 
+
+  <form method="get" action="{% url 'home' %}">
+  <div class="input-group input-group-sm">
+  <input class="form-control" placeholder="Найти имя или город" type="search" value="{{name}}" name="name"/>
+  </div>
+  </form>
+
 <table class="table">
   <thead>
     <tr>
@@ -12,6 +19,7 @@
       <th>Города</th>
       <th>Телефоны</th>
       <th>Email</th>
+      <th>Последнее событие</th>
     </tr>
   </thead>
   <tbody>
@@ -21,6 +29,7 @@
         <td>{{ contact.places }}</td>
         <td>{{ contact.phones }}</td>
         <td>{{ contact.email }}</td>
+        <td>{{ contact.get_lastevent }}</td>
       </tr>
     {% endfor %}
   </tbody>
@@ -66,11 +75,5 @@
   </ul>
 {% endif %}
 
-<form method="get" action="{% url 'home' %}">
-    
-    <p>Найти по имени: <input type="text" value="{{name}}" name="name"/></p>
-    <!--<p>order_by: <input type="text" value={{orderby}} name="orderby"/></p>-->
-    {% buttons submit='OK' %}{% endbuttons %}
-</form>
 
 {% endblock %}
