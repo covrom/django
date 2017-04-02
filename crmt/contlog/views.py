@@ -12,6 +12,7 @@ class HomePageView(ListView):
     #добавить сюда последнее событие
     queryset = Contact.objects.all()
     template_name = 'contlog/home.html'
+    paginate_by = 10
 
 
 

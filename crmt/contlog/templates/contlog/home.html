@@ -4,7 +4,48 @@
 {% block title %}Прокатчики{% endblock %}
 
 {% block content %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Прокатчик</th>
+      <th>Города</th>
+      <th>Телефоны</th>
+      <th>Email</th>
+    </tr>
+  </thead>
+  <tbody>
     {% for contact in allcontacts %}
-        <p>{{ contact.name }}</p>
+      <tr>
+        <td>{{ contact.name }}</td>
+        <td>{{ contact.places }}</td>
+        <td>{{ contact.phones }}</td>
+        <td>{{ contact.email }}</td>
+      </tr>
     {% endfor %}
+  </tbody>
+</table>
+
+{% if is_paginated %}
+  <ul class="pagination">
+    {% if page_obj.has_previous %}
+      <li><a href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&laquo;</span></li>
+    {% endif %}
+    {% for i in paginator.page_range %}
+      {% if page_obj.number == i %}
+        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+      {% else %}
+        <li><a href="?page={{ i }}">{{ i }}</a></li>
+      {% endif %}
+    {% endfor %}
+    {% if page_obj.has_next %}
+      <li><a href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+    {% else %}
+      <li class="disabled"><span>&raquo;</span></li>
+    {% endif %}
+  </ul>
+{% endif %}
+
 {% endblock %}
