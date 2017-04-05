@@ -17,7 +17,7 @@ class HomePageView(ListView):
         #добавить сюда последнее событие
         name_val = self.request.GET.get('name', '')
         if name_val:
-            new_qs = Contact.objects.filter(name=name_val)#.order_by(order)
+            new_qs = Contact.objects.filter(name__icontains=name_val)#.order_by(order)
         else:
             new_qs = Contact.objects.all()
         return new_qs
