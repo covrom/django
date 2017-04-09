@@ -1,79 +1,12 @@
 {% extends 'contlog/base.html' %}
-{% load bootstrap3 %}
+{% block bootstrap3_extra_head %}
+{% load table_tags %}
+{% endblock %}
 
 {% block title %}Прокатчики{% endblock %}
 
 {% block content %}
 
-
-  <form method="get" action="{% url 'home' %}">
-  <div class="input-group input-group-sm">
-  <input class="form-control" placeholder="Найти имя или город" type="search" value="{{name}}" name="name"/>
-  </div>
-  </form>
-
-<table class="table">
-  <thead>
-    <tr>
-      <th>Прокатчик</th>
-      <th>Города</th>
-      <th>Телефоны</th>
-      <th>Email</th>
-      <th>Последнее событие</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for contact in allcontacts %}
-      <tr>
-        <td>{{ contact.name }}</td>
-        <td>{{ contact.places }}</td>
-        <td>{{ contact.phones }}</td>
-        <td>{{ contact.email }}</td>
-        <td>{{ contact.get_lastevent }}</td>
-      </tr>
-    {% endfor %}
-  </tbody>
-</table>
-
-{% if is_paginated %}
-   <ul class="pagination pagination-sm">
-    {% if page_obj.has_previous %}
-      <li>
-        {% if request.GET.name %}
-          <a href="?page={{ page_obj.previous_page_number }}&name={{ request.GET.name }}">&laquo;</a>
-        {% else %}
-          <a href="?page={{ page_obj.previous_page_number }}">&laquo;</a>
-        {% endif %}
-      </li>
-    {% else %}
-      <li class="disabled"><span>&laquo;</span></li>
-    {% endif %}
-    {% for i in paginator.page_range %}
-      {% if page_obj.number == i %}
-        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
-      {% else %}
-        <li>
-        {% if request.GET.name %}
-            <a href="?page={{ i }}&name={{ request.GET.name }}">{{ i }}</a>
-        {% else %}
-            <a href="?page={{ i }}">{{ i }}</a>
-        {% endif %}
-        </li>
-      {% endif %}
-    {% endfor %}
-    {% if page_obj.has_next %}
-      <li>
-        {% if request.GET.name %}
-          <a href="?page={{ page_obj.next_page_number }}&name={{ request.GET.name }}">&raquo;</a>
-        {% else %}
-          <a href="?page={{ page_obj.next_page_number }}">&raquo;</a>
-        {% endif %}
-      </li>
-    {% else %}
-      <li class="disabled"><span>&raquo;</span></li>
-    {% endif %}
-  </ul>
-{% endif %}
-
+{% render_table contacts %}
 
 {% endblock %}

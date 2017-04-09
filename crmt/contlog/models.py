@@ -23,18 +23,24 @@ class Contact(models.Model):
     email = models.EmailField("email", max_length=250, db_index=True, blank=True)
     requisites = models.TextField("реквизиты", blank=True)
     comments = models.TextField("комментарии", blank=True)
+    lastevent = models.CharField("последнее событие", max_length=250, db_index=True, blank=True, editable=False)
+
+    def get_lastevent(self):
+        evset = '\n'.join([str(i) for i in self.events_set.order_by('-id')[:1]])
+        return evset
 
     def __str__(self):
         return self.name
+
+    def save(self, *args, **kwargs):
+        self.lastevent = self.get_lastevent()
+        super(Contact, self).save(*args, **kwargs)
 
     class Meta:
         ordering = ["name"]
         verbose_name = "Прокатчик"
         verbose_name_plural = "Прокатчики"
     
-    def get_lastevent(self):
-        evset = '\n'.join([str(i) for i in self.events_set.order_by('-id')[:1]])
-        return evset
 
 
 class Events(models.Model):
@@ -47,7 +53,12 @@ class Events(models.Model):
     comments = models.TextField("комментарии", blank=True)
 
     def __str__(self):
-        return '{0:%d.%m.%Y %H:%M} {1}'.format(self.added,self.comments.split('\n', 1)[0])
+        return '{0:%Y-%m-%d %H:%M} {1}'.format(self.added,self.comments.split('\n', 1)[0])
+
+    def save(self, *args, **kwargs):
+        super(Events, self).save(*args, **kwargs)
+        #теперь обновим контакт
+        self.contact.save()
 
     class Meta:
         ordering = ["-id"]
