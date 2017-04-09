@@ -6,6 +6,7 @@ from django.core.urlresolvers import reverse_lazy
 from table.views import FeedDataView
 from .tables import ContactTable
 from .models import Contact
+from .forms import ContactDataForm
 
 
 class HomePageView(TemplateView):
@@ -19,7 +20,8 @@ class HomePageView(TemplateView):
 class EditContactView(UpdateView):
     model = Contact
     success_url = reverse_lazy('home')
-    fields = ['name']
+    form_class = ContactDataForm
+    #fields = ['name']
     template_name = 'contlog/edit_contact.html'
     def get_context_data(self, **kwargs):
         context = super(EditContactView, self).get_context_data(**kwargs)
