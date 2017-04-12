@@ -11,11 +11,8 @@ from .forms import ContactDataForm
 
 class HomePageView(TemplateView):
     template_name = 'contlog/home.html'
-
-    def get_context_data(self, **kwargs):
-        context = super(HomePageView, self).get_context_data(**kwargs)
-        context['contacts'] = ContactTable()
-        return context
+    contacts = ContactTable()
+ 
 
 class EditContactView(UpdateView):
     model = Contact
@@ -23,8 +20,5 @@ class EditContactView(UpdateView):
     form_class = ContactDataForm
     #fields = ['name']
     template_name = 'contlog/edit_contact.html'
-    def get_context_data(self, **kwargs):
-        context = super(EditContactView, self).get_context_data(**kwargs)
-        context['now'] = timezone.now()
-        return context
+    now = timezone.now()
 
