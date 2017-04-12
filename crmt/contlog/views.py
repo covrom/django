@@ -3,8 +3,8 @@ from django.views.generic import TemplateView, DetailView
 from django.utils import timezone
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
-from table.views import FeedDataView
-from .tables import ContactTable
+# from table.views import FeedDataView
+# from .tables import ContactTable
 from .models import Contact
 from .forms import ContactDataForm
 from django.http import JsonResponse
