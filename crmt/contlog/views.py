@@ -7,12 +7,17 @@ from table.views import FeedDataView
 from .tables import ContactTable
 from .models import Contact
 from .forms import ContactDataForm
+from django.http import JsonResponse
+from django.template.loader import render_to_string
 
 
 class HomePageView(TemplateView):
     template_name = 'contlog/home.html'
-    contacts = ContactTable()
  
+class ContactsView(TemplateView):
+    template_name = 'contlog/contacts.html'
+    # contacts = ContactTable()
+    contacts = Contact.objects.all() #view.contacts
 
 class EditContactView(UpdateView):
     model = Contact
@@ -22,3 +27,11 @@ class EditContactView(UpdateView):
     template_name = 'contlog/edit_contact.html'
     now = timezone.now()
 
+def contact_create(request):
+    form = ContactDataForm()
+    context = {'form': form}
+    html_form = render_to_string('contlog/part_cont_create.html',
+        context,
+        request=request,
+    )
+    return JsonResponse({'html_form': html_form})

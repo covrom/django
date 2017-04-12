@@ -8,10 +8,12 @@ Class-based views
     2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
 """
     
-from .views import HomePageView, EditContactView
+from .views import HomePageView, EditContactView, ContactsView, contact_create
 
 urlpatterns = [
     url(r'^$', HomePageView.as_view(), name='home'),
+    url(r'^contacts/$', ContactsView.as_view(), name='contact_list'),
     url(r'^table/', include('table.urls')),
     url(r'^edit_contact/(?P<pk>\d+)/$', EditContactView.as_view(), name='edit_contact'),
+    url(r'^create_contact/$', contact_create, name='create_contact'),
 ]

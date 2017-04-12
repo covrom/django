@@ -1,0 +1,73 @@
+{% extends 'contlog/base.html' %}
+{% load static %}
+
+{% block bootstrap3_extra_head %}
+{% endblock %}
+
+{% block title %}Прокатчики{% endblock %}
+
+{% block content %}
+
+<script type='text/javascript'>
+$(function () {
+
+  $(".js-create-cnt").click(function () {
+    $.ajax({
+      url: '{% url "create_contact" %}',
+      type: 'get',
+      dataType: 'json',
+      beforeSend: function () {
+        $("#modal-cnt").modal("show");
+      },
+      success: function (data) {
+        $("#modal-cnt .modal-content").html(data.html_form);
+      }
+    });
+  });
+
+});
+</script>
+
+<p>
+    <button type="button" class="btn btn-primary js-create-cnt">
+      <span class="glyphicon glyphicon-plus"></span>
+      Новый прокатчик
+    </button>
+</p>
+
+<table class="table" id="contacts-table">
+    <thead>
+      <tr>
+        <th>№</th>
+        <th>Прокатчик</th>
+        <th>Города</th>
+        <th>Телефоны</th>
+        <th>Email</th>
+        <th>Последнее событие</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for cnt in view.contacts %}
+        <tr>
+          <td>{{ cnt.id }}</td>
+          <td>{{ cnt.name }}</td>
+          <td>{{ cnt.places }}</td>
+          <td>{{ cnt.phones }}</td>
+          <td>{{ cnt.email }}</td>
+          <td>{{ cnt.lastevent }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="7" class="text-center bg-warning">Нет прокатчиков</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+  <div class="modal fade" id="modal-cnt">
+    <div class="modal-dialog">
+      <div class="modal-content">
+    </div>
+  </div>
+
+{% endblock %}

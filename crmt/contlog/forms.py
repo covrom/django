@@ -17,15 +17,9 @@ class ContactDataForm(forms.ModelForm):
         self.helper.form_class = 'form-horizontal'
         self.helper.layout = Layout(
             Div(
-            Div(
-            Div('name',css_class="col-md-5"),Div('places', css_class="col-md-6 col-md-offset-1"),
-                css_class = 'row'
-            ),
-            Div(
-                Div(PrependedText('email', '@', placeholder="Email"), css_class="col-md-5"),
-                Div('phones', css_class="col-md-6 col-md-offset-1"),
-                css_class = 'row'
-            ), css_class = 'container'
+            'name','places',
+            Div(PrependedText('email', '@', placeholder="Email")),
+            'phones', css_class = 'container'
             ),
             TabHolder(Tab('Реквизиты', 'requisites', css_id='reqs'),
                      Tab('Заметки', 'comments', css_id='comm')
