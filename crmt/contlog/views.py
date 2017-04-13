@@ -3,21 +3,32 @@ from django.views.generic import TemplateView, DetailView
 from django.utils import timezone
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from django.core.urlresolvers import reverse_lazy
-# from table.views import FeedDataView
-# from .tables import ContactTable
 from .models import Contact
 from .forms import ContactDataForm
 from django.http import JsonResponse
 from django.template.loader import render_to_string
-
+from django.core.paginator import Paginator, PageNotAnInteger, EmptyPage
 
 class HomePageView(TemplateView):
     template_name = 'contlog/home.html'
  
 class ContactsView(TemplateView):
     template_name = 'contlog/contacts.html'
-    # contacts = ContactTable()
     contacts = Contact.objects.all() #view.contacts
+    
+    def get(self, request, *args, **kwargs):
+        self.paginator = Paginator(self.contacts, 10)
+        page = request.GET.get('page')
+        try:
+            self.contacts = self.paginator.page(page)
+            self.number = int(page)
+        except PageNotAnInteger:
+            self.number = 1
+            self.contacts = self.paginator.page(self.number)
+        except EmptyPage:
+            self.number = self.paginator.num_pages
+            self.contacts = self.paginator.page(self.number)
+        return super(ContactsView, self).get(request, *args, **kwargs)
 
 class EditContactView(UpdateView):
     model = Contact
@@ -36,10 +47,6 @@ def contact_create(request):
         if form.is_valid():
             form.save()
             data['form_is_valid'] = True
-            cnts = Contact.objects.all()
-            data['html_cnt_list'] = render_to_string('contlog/part_cont_list.html', {
-                'view': {'contacts':cnts}
-            })
         else:
             data['form_is_valid'] = False
     else:

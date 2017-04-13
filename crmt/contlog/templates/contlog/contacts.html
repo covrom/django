@@ -39,8 +39,8 @@ $(function () {
       dataType: 'json',
       success: function (data) {
         if (data.form_is_valid) {
-          $("#contacts-table tbody").html(data.html_cnt_list);  
           $("#modal-cnt").modal("hide");
+          location.reload();
         }
         else {
           $("#modal-cnt .modal-content").html(data.html_form);
@@ -72,6 +72,8 @@ $(function () {
       {% include 'contlog/part_cont_list.html' %}
     </tbody>
   </table>
+  {% load bootstrap3 %}
+  {% bootstrap_pagination view size='small' extra=request.GET.urlencode %}
 
   <div class="modal fade" id="modal-cnt" role="dialog">
     <div class="modal-dialog">
