@@ -34,7 +34,6 @@ class EditContactView(UpdateView):
     model = Contact
     success_url = reverse_lazy('home')
     form_class = ContactDataForm
-    #fields = ['name']
     template_name = 'contlog/edit_contact.html'
     now = timezone.now()
 
