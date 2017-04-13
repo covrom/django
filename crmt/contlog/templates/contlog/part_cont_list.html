@@ -1,0 +1,14 @@
+{% for cnt in view.contacts %}
+        <tr>
+          <td>{{ cnt.id }}</td>
+          <td>{{ cnt.name }}</td>
+          <td>{{ cnt.places }}</td>
+          <td>{{ cnt.phones }}</td>
+          <td>{{ cnt.email }}</td>
+          <td>{{ cnt.lastevent }}</td>
+        </tr>
+      {% empty %}
+        <tr>
+          <td colspan="7" class="text-center bg-warning">Нет прокатчиков</td>
+        </tr>
+{% endfor %}

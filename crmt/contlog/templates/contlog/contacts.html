@@ -25,7 +25,28 @@ $(function () {
     });
   });
 
+  $("#modal-cnt").on("submit", ".js-cnt-create-form", function () {
+    var form = $(this);
+    $.ajax({
+      url: form.attr("action"),
+      data: form.serialize(),
+      type: form.attr("method"),
+      dataType: 'json',
+      success: function (data) {
+        if (data.form_is_valid) {
+          $("#contacts-table tbody").html(data.html_cnt_list);  
+          $("#modal-cnt").modal("hide");
+        }
+        else {
+          $("#modal-cnt .modal-content").html(data.html_form);
+        }
+      }
+    });
+    return false;
+  });
+
 });
+
 </script>
 
 <p>
@@ -47,20 +68,7 @@ $(function () {
       </tr>
     </thead>
     <tbody>
-      {% for cnt in view.contacts %}
-        <tr>
-          <td>{{ cnt.id }}</td>
-          <td>{{ cnt.name }}</td>
-          <td>{{ cnt.places }}</td>
-          <td>{{ cnt.phones }}</td>
-          <td>{{ cnt.email }}</td>
-          <td>{{ cnt.lastevent }}</td>
-        </tr>
-      {% empty %}
-        <tr>
-          <td colspan="7" class="text-center bg-warning">Нет прокатчиков</td>
-        </tr>
-      {% endfor %}
+      {% include 'contlog/part_cont_list.html' %}
     </tbody>
   </table>
 

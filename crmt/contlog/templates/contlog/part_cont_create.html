@@ -5,7 +5,7 @@
 <h4 class="modal-title">Новый прокатчик</h4>
 </div>
 <div class="modal-body">
-<form action="{% url 'contact_list' %}" method="post" class="form">
+<form action="{% url 'create_contact' %}" method="post" class="js-cnt-create-form">
   {% csrf_token %}
   
   {% bootstrap_field form.name %}
@@ -25,10 +25,13 @@
     </div>
   </div>
 
+  <div class="modal-footer">
   {% buttons %}
+    <button type="button" class="btn btn-default" data-dismiss="modal">Отмена</button>
     <button type="submit" class="btn btn-primary">
       {% bootstrap_icon "save" %} Записать
     </button>
   {% endbuttons %}
+  </div>
 </form>
 </div>
