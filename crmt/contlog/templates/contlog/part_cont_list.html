@@ -1,7 +1,7 @@
 {% for cnt in view.contacts %}
         <tr>
           <td>{{ cnt.id }}</td>
-          <td>{{ cnt.name }}</td>
+          <td><a href="{% url 'edit_contact' cnt.id %}">{{ cnt.name }}</a></td>
           <td>{{ cnt.places }}</td>
           <td>{{ cnt.phones }}</td>
           <td>{{ cnt.email }}</td>

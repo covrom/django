@@ -4,16 +4,21 @@
 {% block bootstrap3_extra_head %}
 {% endblock %}
 
-{% block title %}Прокатчики{% endblock %}
+{% block title %}Прокатчики
+<button type="button" class="btn btn-sm js-create-cnt" data-url="{% url 'create_contact' %}">
+          <span class="glyphicon glyphicon-plus"></span>
+          </button>
+{% endblock %}
 
 {% block content %}
 
 <script type='text/javascript'>
 $(function () {
 
-  $(".js-create-cnt").click(function () {
+  var loadForm = function () {
+    var btn = $(this);
     $.ajax({
-      url: '{% url "create_contact" %}',
+      url: btn.attr("data-url"),
       type: 'get',
       dataType: 'json',
       beforeSend: function () {
@@ -23,9 +28,9 @@ $(function () {
         $("#modal-cnt .modal-content").html(data.html_form);
       }
     });
-  });
+  };
 
-  $("#modal-cnt").on("submit", ".js-cnt-create-form", function () {
+  var saveForm = function () {
     var form = $(this);
     $.ajax({
       url: form.attr("action"),
@@ -43,18 +48,14 @@ $(function () {
       }
     });
     return false;
-  });
+  };
+
+  $(".js-create-cnt").click(loadForm);
+  $("#modal-cnt").on("submit", ".js-cnt-create-form", saveForm)
 
 });
 
 </script>
-
-<p>
-    <button type="button" class="btn btn-primary js-create-cnt">
-      <span class="glyphicon glyphicon-plus"></span>
-      Новый прокатчик
-    </button>
-</p>
 
 <table class="table" id="contacts-table">
     <thead>
