@@ -39,9 +39,8 @@ class EditContactView(UpdateView):
     now = timezone.now()
 
 def contact_create(request):
-
+    """Обрабатывает ajax запросы для формы ввода нового контакта"""
     data = {}
-
     if request.method == 'POST':
         form = ContactDataForm(request.POST)
         if form.is_valid():
@@ -51,7 +50,6 @@ def contact_create(request):
             data['form_is_valid'] = False
     else:
         form = ContactDataForm()
-
     context = {'form': form}
     data['html_form'] = render_to_string('contlog/part_cont_create.html',
         context,
