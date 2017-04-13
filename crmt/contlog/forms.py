@@ -8,34 +8,13 @@ from crispy_forms.bootstrap import FormActions, PrependedText
 
 
 class ContactDataForm(forms.ModelForm):
-
     def __init__(self, *args, **kwargs):
         super(ContactDataForm, self).__init__(*args, **kwargs)
-        self.helper = FormHelper(self)
-        self.helper.form_id = 'id-contact-data-form'
-        self.helper.form_method = 'post'
-        self.helper.form_class = 'form-horizontal'
-        self.helper.layout = Layout(
-            Div(
-            'name','places',
-            Div(PrependedText('email', '@', placeholder="Email")),
-            'phones', css_class = 'container'
-            ),
-            TabHolder(Tab('Реквизиты', 'requisites', css_id='reqs'),
-                     Tab('Заметки', 'comments', css_id='comm')
-                     ),
-            FormActions(Submit('save', 'Записать'), Button('cancel', 'Отмена', onclick='location.reload();'))
-            
-            )
+        self.fields['name'].required = True
 
     class Meta:
         model = Contact
-        fields = (
-          "name",
-          "places",
-          "phones",
-          "email",
-          "requisites",
-          "comments",
-        )
+        fields = '__all__'
+        
+        
                      
