@@ -28,7 +28,7 @@ class ContactsView(TemplateView):
         except EmptyPage:
             self.number = self.paginator.num_pages
             self.contacts = self.paginator.page(self.number)
-        return super(ContactsView, self).get(request, *args, **kwargs)
+        return super().get(request, *args, **kwargs)
 
 class EditContactView(UpdateView):
     model = Contact

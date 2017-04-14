@@ -9,7 +9,7 @@ from crispy_forms.bootstrap import FormActions, PrependedText
 
 class ContactDataForm(forms.ModelForm):
     def __init__(self, *args, **kwargs):
-        super(ContactDataForm, self).__init__(*args, **kwargs)
+        super().__init__(*args, **kwargs)
         self.fields['name'].required = True
 
     class Meta:

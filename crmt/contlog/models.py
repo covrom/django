@@ -34,7 +34,7 @@ class Contact(models.Model):
 
     def save(self, *args, **kwargs):
         self.lastevent = self.get_lastevent()
-        super(Contact, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
 
     class Meta:
         ordering = ["name"]
@@ -56,7 +56,7 @@ class Events(models.Model):
         return '{0:%Y-%m-%d %H:%M} {1}'.format(self.added,self.comments.split('\n', 1)[0])
 
     def save(self, *args, **kwargs):
-        super(Events, self).save(*args, **kwargs)
+        super().save(*args, **kwargs)
         #теперь обновим контакт
         self.contact.save()
 
